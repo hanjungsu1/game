@@ -67,7 +67,27 @@ def 게임_다시_시작():
     장애물_위치[0] = random.randint(0, 화면_가로 - 장애물_가로)
     장애물_위치[1] = 0
 
+# 게임 오버 화면 표시 함수
+def 게임_오버_화면():
+    화면.fill(흰색)
+    폰트 = pygame.font.SysFont(None, 48)
+    오버_텍스트 = 폰트.render("GAME OVER!", True, 빨간색)
+    화면.blit(오버_텍스트, (300, 250))
+    폰트 = pygame.font.SysFont(None, 24)
+    재시작_텍스트 = 폰트.render("다시 시작하려면 R 키를 누르세요.", True, 검은색)
+    화면.blit(재시작_텍스트, (280, 300))
+    pygame.display.update()
 
+# 게임 클리어 화면 표시 함수
+def 게임_클리어_화면():
+    폰트 = pygame.font.SysFont(None, 48)
+    클리어_텍스트 = 폰트.render("GAME CLEAR!", True, 검은색)
+    화면.blit(클리어_텍스트, (300, 250))
+    폰트 = pygame.font.SysFont(None, 24)
+    재시작_텍스트 = 폰트.render("다시 시작하려면 R 키를 누르세요.", True, 검은색)
+    화면.blit(재시작_텍스트, (280, 300))
+    pygame.display.update()
+    
 # 게임 루프
 while 게임_진행중:
     현재_시간 = pygame.time.get_ticks()
@@ -113,22 +133,19 @@ while 게임_진행중:
         else:
             게임_다시_시작()
 
-        # 게임 오버 상태에서만 게임 종료
-        if 게임_오버:
-            pygame.quit()
-            sys.exit()
+    # 게임 오버 상태에서 게임 오버 화면 표시
+    if 게임_오버:
+        게임_오버_화면()
+        continue  # 게임 오버 화면이 표시되는 동안 게임 루프 멈춤
 
     # 게임 클리어 조건 확인
     if not 게임_오버 and 경과_시간 >= 60:  # 게임 오버 상태가 아니고 1분(60초)이 경과한 경우
         게임_클리어 = True
-        pygame.time.delay(2000)  # 2초 대기
+        pygame.time.delay(1000)  # 2초 대기
 
     # 게임 클리어 메시지 표시
     if 게임_클리어:
-        폰트 = pygame.font.SysFont(None, 48)
-        클리어_텍스트 = 폰트.render("게임 클리어!", True, 검은색)
-        화면.blit(클리어_텍스트, (300, 250))
-        pygame.display.update()
+        게임_클리어_화면()
         continue  # 게임 클리어 메시지가 표시될 동안 게임 루프를 멈추고 대기
 
     # 화면에 남은 시간 표시
