@@ -117,7 +117,15 @@ while 게임_진행중:
                 목숨 = 3
                 점수 = 0
                 게임_시작_시간 = pygame.time.get_ticks()
+                장애물_리스트 = []  # 장애물 리스트 초기화
                 게임_오버 = False
+            if event.key == pygame.K_r and 게임_클리어:  # 게임 클리어 후 R 키를 누르면 재시작
+                캐릭터_위치 = [화면_가로 / 2, 화면_세로 / 2]
+                목숨 = 3
+                점수 = 0
+                게임_시작_시간 = pygame.time.get_ticks()
+                장애물_리스트 = []  # 장애물 리스트 초기화
+                게임_클리어 = False
 
     키_입력 = pygame.key.get_pressed()
     우주선_이동 = [0, 0]  # 우주선의 새로운 이동량
