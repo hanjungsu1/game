@@ -29,10 +29,9 @@ pygame.display.set_caption("우주 탐험")
 초록색 = (255, 0, 255)
 
 # 게임 상태
-게임_진행중 = True
+게임_진행중 = False
 게임_오버 = False
 게임_클리어 = False
-게임_시작_시간 = pygame.time.get_ticks()  # 게임 시작 시간
 
 # 목숨 설정
 목숨 = 3
@@ -175,7 +174,42 @@ def 게임_클리어_화면():
     점수_텍스트 = 폰트.render(f'SCORE: {점수*목숨}', True, 검은색)
     화면.blit(점수_텍스트, (300, 350))
     pygame.display.update()
-    
+
+def 게임_플레이_방법_화면():
+    화면.fill(흰색)
+    폰트 = pygame.font.SysFont(None, 36)
+    설명_텍스트1 = 폰트.render("게임 플레이 방법", True, 검은색)
+    설명_텍스트2 = 폰트.render("좌우 화살표 키로 우주선을 이동시킵니다.", True, 검은색)
+    설명_텍스트3 = 폰트.render("위쪽 화살표 키로 우주선을 위로 이동시킵니다.", True, 검은색)
+    설명_텍스트4 = 폰트.render("아래쪽 화살표 키로 우주선을 아래로 이동시킵니다.", True, 검은색)
+    설명_텍스트5 = 폰트.render("스페이스바를 눌러 총알을 발사합니다.", True, 검은색)
+    설명_텍스트6 = 폰트.render("게임을 시작하려면 아무 키나 누르세요.", True, 검은색)
+
+    화면.blit(설명_텍스트1, (300, 100))
+    화면.blit(설명_텍스트2, (200, 200))
+    화면.blit(설명_텍스트3, (200, 250))
+    화면.blit(설명_텍스트4, (200, 300))
+    화면.blit(설명_텍스트5, (200, 350))
+    화면.blit(설명_텍스트6, (200, 450))
+
+    pygame.display.update()
+
+# 게임 플레이 방법 화면 표시
+게임_플레이_방법_화면()
+
+# 사용자의 입력 대기
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:  # 아무 키나 누르면 게임 시작
+            게임_진행중 = True
+            게임_시작_시간 = pygame.time.get_ticks()  # 게임 시작 시간
+            break
+        elif event.type == pygame.QUIT:  # 종료 이벤트 처리
+            pygame.quit()
+            sys.exit()  
+    if 게임_진행중:
+        break  # 게임이 시작되었으면 입력 대기 루프를 종료
+
 # 게임 루프
 while 게임_진행중:
     현재_시간 = pygame.time.get_ticks()
@@ -193,6 +227,7 @@ while 게임_진행중:
                 if event.key == pygame.K_r:  # 게임 오버 후 R 키를 누르면 재시작
                     게임_오버 = False
                     게임_클리어 = False
+                    게임_다시_시작()
                     캐릭터_위치 = [화면_가로 / 2, 화면_세로 / 2]
                     게임_시작_시간 = pygame.time.get_ticks()
                     장애물_리스트 = []  # 장애물 리스트 초기화
@@ -288,7 +323,7 @@ while 게임_진행중:
         continue  # 게임 오버 화면이 표시되는 동안 게임 루프 멈춤
 
     # 게임 클리어 조건 확인
-    if 목숨 > 0 and 남은_시간 <= 55:  # 게임 오버 상태가 아니고 1분(60초)이 경과한 경우
+    if 목숨 > 0 and 남은_시간 <= 0:  # 게임 오버 상태가 아니고 1분(60초)이 경과한 경우
         게임_클리어 = True
         게임_클리어_화면()
         continue  # 게임 클리어 메시지가 표시될 동안 게임 루프를 멈추고 대기
