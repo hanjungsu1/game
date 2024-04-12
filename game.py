@@ -2,7 +2,7 @@
 import pygame
 import sys
 import random
-import time
+import os
 
 # 초기화
 pygame.init()
@@ -14,8 +14,17 @@ pygame.init()
 pygame.display.set_caption("우주 탐험")
 
 # 폰트 설정
-font_path = "C:\\Windows\\Fonts\\GULIM.TTC"
-폰트 = pygame.font.SysFont(font_path, 36)
+폰트 = pygame.font.SysFont(None, 36)
+
+# 이미지 불러오기
+우주선_이미지 = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\우주선.jpg")
+우주선 = pygame.transform.scale(우주선_이미지, (50, 50))
+운석_이미지 = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\운석.jpg")
+운석 = pygame.transform.scale(운석_이미지, (50, 50))
+아이템_이미지 = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\아이템.jpg")
+아이템_모습 = pygame.transform.scale(아이템_이미지, (50, 50))
+배경_이미지 = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\배경.jpg")
+배경 = pygame.transform.scale(배경_이미지, (화면_가로, 화면_세로))
 
 # 게임 클리어 시간 설정 (초 단위)
 게임_클리어_시간 = 60  # 1분
@@ -223,7 +232,7 @@ while 게임_진행중:
     경과_시간 = (현재_시간 - 게임_시작_시간) / 1000  # 경과 시간 (초 단위로 변환)
     남은_시간 = 게임_클리어_시간 - 경과_시간  # 게임 클리어까지 남은 시간 계산
 
-    화면.fill(흰색)
+    화면.blit(배경, (0, 0))
     키_입력 = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -234,10 +243,12 @@ while 게임_진행중:
                 if event.key == pygame.K_r:  # 게임 오버 후 R 키를 누르면 재시작
                     게임_오버 = False
                     게임_클리어 = False
+                    무적 = False
                     게임_다시_시작()
                     캐릭터_위치 = [화면_가로 / 2, 화면_세로 / 2]
                     게임_시작_시간 = pygame.time.get_ticks()
                     장애물_리스트 = []  # 장애물 리스트 초기화
+                    아이템_리스트 = []
                     우주선_이동 = [0, 0]  # 우주선의 새로운 이동량
 
     if 키_입력[pygame.K_LEFT]:
@@ -298,7 +309,7 @@ while 게임_진행중:
                 게임_오버 = True
         
         # 장애물 화면에 그리기
-        pygame.draw.rect(화면, 빨간색, (장애물_위치[0], 장애물_위치[1], 장애물_가로, 장애물_세로))
+        화면.blit(운석, (장애물_위치[0], 장애물_위치[1], 장애물_가로, 장애물_세로))
 
     # 아이템 생성 및 업데이트
     if 현재_시간 - 아이템_생성_시간 >= 아이템_생성_간격:
@@ -308,7 +319,7 @@ while 게임_진행중:
 
     # 아이템 그리기
     for 아이템 in 아이템_리스트:
-        pygame.draw.rect(화면, 노란색, (아이템['위치'][0], 아이템['위치'][1], 아이템_가로, 아이템_세로))
+        화면.blit(아이템_모습, (아이템['위치'][0], 아이템['위치'][1]))
 
     # 아이템 위치 업데이트
     아이템['위치'][1] += 아이템_속도
@@ -346,19 +357,19 @@ while 게임_진행중:
         if 무적:
             pygame.draw.rect(화면, 초록색, (캐릭터_위치[0], 캐릭터_위치[1], 캐릭터_가로, 캐릭터_세로))
         else:
-            pygame.draw.rect(화면, 파란색, (캐릭터_위치[0], 캐릭터_위치[1], 캐릭터_가로, 캐릭터_세로))
+            화면.blit(우주선, (캐릭터_위치[0], 캐릭터_위치[1], 캐릭터_가로, 캐릭터_세로))
 
     # 화면에 남은 시간 표시
     폰트 = pygame.font.SysFont(None, 24)
-    남은_시간_텍스트 = 폰트.render(f'TIME: {int(남은_시간)}S', True, 검은색)
+    남은_시간_텍스트 = 폰트.render(f'TIME: {int(남은_시간)}S', True, 흰색)
     화면.blit(남은_시간_텍스트, (10, 40))
     
     # 화면에 현재 목숨 수 표시
-    목숨_텍스트 = 폰트.render(f'LIFE: {목숨}', True, 검은색)
+    목숨_텍스트 = 폰트.render(f'LIFE: {목숨}', True, 흰색)
     화면.blit(목숨_텍스트, (10, 10))
 
     # 화면에 점수 표시
-    점수_텍스트 = 폰트.render(f'SCORE: {점수}', True, 검은색)
+    점수_텍스트 = 폰트.render(f'SCORE: {점수}', True, 흰색)
     화면.blit(점수_텍스트, (10, 70))
 
     # 화면 업데이트
