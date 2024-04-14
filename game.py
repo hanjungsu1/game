@@ -26,6 +26,21 @@ pygame.display.set_caption("우주 탐험")
 배경_이미지 = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\배경.jpg")
 배경 = pygame.transform.scale(배경_이미지, (화면_가로, 화면_세로))
 
+# 효과음 로드
+클리어음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\CLEAR.mp3")
+클리어음_재생 = False
+오버음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\OVER.mp3")
+오버음_재생 = False
+폭발음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Exp.mp3")
+충돌음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Cra.mp3")
+무적충돌음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Mu.mp3")
+목숨증가음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\life.ogg")
+속도음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Sp.ogg")
+
+# 배경음 로드
+배경음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\space.mp3")
+무적상태음 = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\more.mp3")
+
 # 게임 클리어 시간 설정 (초 단위)
 게임_클리어_시간 = 60  # 1분
 장애물_생성_시간 = 0
@@ -95,14 +110,18 @@ def 아이템_획득(아이템):
     if 획득_아이템 == "무적":
         # 무적 상태로 설정
         global 무적
+        배경음.stop()
+        무적상태음.play()
         무적 = True
     elif 획득_아이템 == "목숨증가":
         # 목숨 증가
         global 목숨
+        목숨증가음.play()
         목숨 += 1
     elif 획득_아이템 == "속도증가":
         # 속도 증가
         global 캐릭터_속도
+        속도음.play()
         캐릭터_속도 += 1
 
 def 아이템_생성():
@@ -126,6 +145,7 @@ def 총알_장애물_충돌_감지():
     for 총알_위치 in 총알_리스트:
         for 장애물_위치 in 장애물_리스트:
             if 충돌_감지(총알_위치, 총알_가로, 총알_세로, 장애물_위치, 장애물_가로, 장애물_세로):
+                폭발음.play()
                 총알_리스트.remove(총알_위치)
                 장애물_리스트.remove(장애물_위치)
                 global 점수
@@ -154,16 +174,27 @@ def 충돌_감지(객체1_위치, 객체1_가로, 객체1_세로, 객체2_위치, 객체2_가로, 객체2_
 
 # 게임 오버 함수
 def 게임_다시_시작():
-    global 목숨, 점수
+    global 배경음, 무적, 목숨, 점수, 캐릭터_위치, 캐릭터_속도, 장애물_리스트, 아이템_리스트, 캐릭터_위치, 게임_시작_시간
+    배경음.play(-1)
+    무적 = False
     목숨 = 3
     점수 = 0
     캐릭터_속도 = 1
+    장애물_리스트 = []  # 장애물 리스트 초기화
+    아이템_리스트 = []
     # 장애물 위치 초기화
     장애물_위치[0] = random.randint(0, 화면_가로 - 장애물_가로)
     장애물_위치[1] = 0
+    캐릭터_위치 = [화면_가로 / 2, 화면_세로 / 2]
+    게임_시작_시간 = pygame.time.get_ticks()
 
 # 게임 오버 화면 표시 함수
 def 게임_오버_화면():
+    global 오버음_재생
+    if not 오버음_재생:
+        오버음.set_volume(0.7)
+        오버음.play()
+        오버음_재생 = True
     화면.fill(흰색)
     font_path = "C:\Windows\Fonts\HMKBA.TTF"
     font_korea = "C:\Windows\Fonts\YTTE08.TTF"
@@ -177,6 +208,11 @@ def 게임_오버_화면():
 
 # 게임 클리어 화면 표시 함수
 def 게임_클리어_화면():
+    global 클리어음_재생
+    if not 클리어음_재생:
+        클리어음.set_volume(0.7)
+        클리어음.play()
+        클리어음_재생 = True
     화면.fill(흰색)
     font_path = "C:\Windows\Fonts\HMKBA.TTF"
     font_korea = "C:\Windows\Fonts\YTTE08.TTF"
@@ -219,6 +255,8 @@ while True:
         if event.type == pygame.KEYDOWN:  # 아무 키나 누르면 게임 시작
             게임_진행중 = True
             게임_시작_시간 = pygame.time.get_ticks()  # 게임 시작 시간
+            배경음.play(-1)
+            배경음.set_volume(0.1)
             break
         elif event.type == pygame.QUIT:  # 종료 이벤트 처리
             pygame.quit()
@@ -238,18 +276,14 @@ while 게임_진행중:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if 게임_오버 or 게임_클리어:
-                if event.key == pygame.K_r:  # 게임 오버 후 R 키를 누르면 재시작
-                    게임_오버 = False
-                    게임_클리어 = False
-                    무적 = False
-                    게임_다시_시작()
-                    캐릭터_위치 = [화면_가로 / 2, 화면_세로 / 2]
-                    게임_시작_시간 = pygame.time.get_ticks()
-                    장애물_리스트 = []  # 장애물 리스트 초기화
-                    아이템_리스트 = []
-                    우주선_이동 = [0, 0]  # 우주선의 새로운 이동량
+
+    if 게임_오버 or 게임_클리어:
+        if 키_입력[pygame.K_r]:  # 게임 오버 후 R 키를 누르면 재시작
+            클리어음_재생 = False
+            오버음_재생 = False
+            게임_오버 = False
+            게임_클리어 = False
+            게임_다시_시작()
 
     if 키_입력[pygame.K_LEFT]:
         캐릭터_위치[0] -= 캐릭터_속도
@@ -263,12 +297,6 @@ while 게임_진행중:
         if 현재_시간 - 마지막_총알_발사_시간 >= 총알_발사_간격:
             총알_리스트.append(총알_생성(캐릭터_위치))
             마지막_총알_발사_시간 = 현재_시간
-    if 키_입력[pygame.K_q]: # 무적 상태가 발동되는 것을 확인하기 위한 임시 코드
-        무적 = True
-    if 키_입력[pygame.K_w]:
-        무적 = False
-    if 키_입력[pygame.K_a]:
-        게임_클리어 = True
 
     # 캐릭터가 화면 밖으로 나가지 않도록 제한
     캐릭터_위치[0] = max(0, min(화면_가로 - 캐릭터_가로, 캐릭터_위치[0]))
@@ -281,41 +309,23 @@ while 게임_진행중:
     총알_장애물_충돌_감지()
 
     # 장애물 생성 및 업데이트
-    if 현재_시간 - 장애물_생성_시간 >= 장애물_생성_간격:
-        장애물_생성_시간 = 현재_시간
-        장애물_리스트.append(장애물_생성())
-        장애물_생성_간격 = random.uniform(0.5, 1.5) * 1000  # 장애물 생성 간격을 0.5초에서 1.5초 사이로 랜덤 설정
+    if not 게임_오버 and not 게임_클리어:
+        if 현재_시간 - 장애물_생성_시간 >= 장애물_생성_간격:
+            장애물_생성_시간 = 현재_시간
+            장애물_리스트.append(장애물_생성())
+            장애물_생성_간격 = random.uniform(0.5, 1.5) * 1000  # 장애물 생성 간격을 0.5초에서 1.5초 사이로 랜덤 설정
 
     # 총알 그리기
-    for 총알 in 총알_리스트:
-        pygame.draw.rect(화면, 파란색, (총알[0], 총알[1], 총알_가로, 총알_세로))
-
-    for 장애물_위치 in 장애물_리스트:
-        장애물_위치[1] += 장애물_속도
-
-        # 충돌 감지
-        if 충돌_감지(캐릭터_위치, 캐릭터_가로, 캐릭터_세로, 장애물_위치, 장애물_가로, 장애물_세로):
-            if 무적 == True:
-                점수 += 50  # 무적 상태이면 충돌이 일어나지 않음
-            elif 게임_오버 == True:
-                continue
-            elif 게임_클리어 == True:
-                continue
-            else:
-                목숨 -= 1
-                캐릭터_속도 = 1
-            장애물_리스트.remove(장애물_위치)
-            if 목숨 <= 0:
-                게임_오버 = True
-        
-        # 장애물 화면에 그리기
-        화면.blit(운석, (장애물_위치[0], 장애물_위치[1], 장애물_가로, 장애물_세로))
+    if 남은_시간 > 0:
+        for 총알 in 총알_리스트:
+            pygame.draw.rect(화면, 빨간색, (총알[0], 총알[1], 총알_가로, 총알_세로))
 
     # 아이템 생성 및 업데이트
-    if 현재_시간 - 아이템_생성_시간 >= 아이템_생성_간격:
-        아이템_생성_시간 = 현재_시간
-        아이템_리스트.append(아이템_생성())
-        아이템_생성_간격 = random.uniform(5, 15) * 1000  # 아이템 생성 간격을 5초에서 15초 사이로 랜덤 설정
+    if 남은_시간 > 0:
+        if 현재_시간 - 아이템_생성_시간 >= 아이템_생성_간격:
+            아이템_생성_시간 = 현재_시간
+            아이템_리스트.append(아이템_생성())
+            아이템_생성_간격 = random.uniform(5, 15) * 1000  # 아이템 생성 간격을 5초에서 15초 사이로 랜덤 설정
 
     # 아이템 그리기
     for 아이템 in 아이템_리스트:
@@ -327,6 +337,38 @@ while 게임_진행중:
     # 아이템 충돌 감지
     아이템_충돌_감지()
 
+    for 장애물_위치 in 장애물_리스트:
+        장애물_위치[1] += 장애물_속도
+
+        # 충돌 감지
+        if 충돌_감지(캐릭터_위치, 캐릭터_가로, 캐릭터_세로, 장애물_위치, 장애물_가로, 장애물_세로):
+            if 무적 == True:
+                무적충돌음.play()
+                점수 += 50  # 무적 상태이면 충돌이 일어나지 않음
+            else:
+                충돌음.play()
+                목숨 -= 1
+                캐릭터_속도 = 1
+            장애물_리스트.remove(장애물_위치)
+            
+        # 장애물 화면에 그리기
+        화면.blit(운석, (장애물_위치[0], 장애물_위치[1], 장애물_가로, 장애물_세로))
+
+    # 게임 플레이 종료 조건
+    if 목숨 <= 0: # 게임 오버 조건 확인
+        무적상태음.stop()
+        배경음.stop()
+        게임_오버 = True
+        게임_오버_화면() # 게임 오버 상태에서 게임 오버 화면 표시
+        continue  # 게임 오버 화면이 표시되는 동안 게임 루프 멈춤
+    else: # 게임 클리어 조건 확인
+        if 남은_시간 <= 0:  # 게임 오버 상태가 아니고 1분(60초)이 경과한 경우
+            무적상태음.stop()
+            배경음.stop()
+            게임_클리어 = True
+            게임_클리어_화면()    # 게임 클리어 상태에서 게임 클리어 화면 표시
+            continue
+
     # 게임 루프 내에서 무적 상태 체크
     if 무적:
         if not 무적_활성화:  # 무적이 활성화된 시점에서만 무적 시작 시간을 초기화
@@ -337,23 +379,14 @@ while 게임_진행중:
         무적_텍스트 = 폰트.render(f'MUTEKI: {int(6-무적_남은시간)}', True, 빨간색)
         화면.blit(무적_텍스트, (10, 100))
         if 무적_남은시간 >= 5:
+            무적상태음.stop()
+            배경음.play(-1)
             무적 = False  # 무적 상태의 지속 시간이 지나면 무적 상태 종료
     else:
         무적_활성화 = False  # 무적 상태가 비활성화된 경우에는 무적 활성화 플래그를 False로 설정
 
-    # 게임 오버 상태에서 게임 오버 화면 표시
-    if 게임_오버:
-        게임_오버_화면()
-        continue  # 게임 오버 화면이 표시되는 동안 게임 루프 멈춤
-
-    # 게임 클리어 조건 확인
-    if 목숨 > 0 and 남은_시간 <= 0:  # 게임 오버 상태가 아니고 1분(60초)이 경과한 경우
-        게임_클리어 = True
-        게임_클리어_화면()
-        continue  # 게임 클리어 메시지가 표시될 동안 게임 루프를 멈추고 대기
-
     # 캐릭터 화면에 그리기
-    if not 게임_오버 or 게임_클리어:
+    if 남은_시간 > 0:
         if 무적:
             pygame.draw.rect(화면, 초록색, (캐릭터_위치[0], 캐릭터_위치[1], 캐릭터_가로, 캐릭터_세로))
         else:
