@@ -4,406 +4,404 @@ import sys
 import random
 import os
 
-# ÃÊ±âÈ­
+# ì´ˆê¸°í™”
 pygame.init()
 
-# È­¸é Å©±â ¼³Á¤
-È­¸é_°¡·Î = 800
-È­¸é_¼¼·Î = 600
-È­¸é = pygame.display.set_mode((È­¸é_°¡·Î, È­¸é_¼¼·Î))
-pygame.display.set_caption("¿ìÁÖ Å½Çè")
+# í™”ë©´ í¬ê¸° ì„¤ì •
+í™”ë©´_ê°€ë¡œ = 800
+í™”ë©´_ì„¸ë¡œ = 600
+í™”ë©´ = pygame.display.set_mode((í™”ë©´_ê°€ë¡œ, í™”ë©´_ì„¸ë¡œ))
+pygame.display.set_caption("ìš°ì£¼ íƒí—˜")
 
-# ÆùÆ® ¼³Á¤
-ÆùÆ® = pygame.font.SysFont(None, 36)
+# í°íŠ¸ ì„¤ì •
+í°íŠ¸ = pygame.font.SysFont(None, 36)
 
-# ÀÌ¹ÌÁö ºÒ·¯¿À±â
-¿ìÁÖ¼±_ÀÌ¹ÌÁö = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\¿ìÁÖ¼±.jpg")
-¿ìÁÖ¼± = pygame.transform.scale(¿ìÁÖ¼±_ÀÌ¹ÌÁö, (50, 50))
-¿î¼®_ÀÌ¹ÌÁö = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\¿î¼®.jpg")
-¿î¼® = pygame.transform.scale(¿î¼®_ÀÌ¹ÌÁö, (50, 50))
-¾ÆÀÌÅÛ_ÀÌ¹ÌÁö = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\¾ÆÀÌÅÛ.jpg")
-¾ÆÀÌÅÛ_¸ð½À = pygame.transform.scale(¾ÆÀÌÅÛ_ÀÌ¹ÌÁö, (50, 50))
-¹è°æ_ÀÌ¹ÌÁö = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\¹è°æ.jpg")
-¹è°æ = pygame.transform.scale(¹è°æ_ÀÌ¹ÌÁö, (È­¸é_°¡·Î, È­¸é_¼¼·Î))
+# ì´ë¯¸ì§€ ë¶ˆëŸ¬ì˜¤ê¸°
+ìš°ì£¼ì„ _ì´ë¯¸ì§€ = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\ì´ë¯¸ì§€\\ìš°ì£¼ì„ .jpg")
+ìš°ì£¼ì„  = pygame.transform.scale(ìš°ì£¼ì„ _ì´ë¯¸ì§€, (50, 50))
+ìš´ì„_ì´ë¯¸ì§€ = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\ì´ë¯¸ì§€\\ìš´ì„.jpg")
+ìš´ì„ = pygame.transform.scale(ìš´ì„_ì´ë¯¸ì§€, (50, 50))
+ì•„ì´í…œ_ì´ë¯¸ì§€ = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\ì´ë¯¸ì§€\\ì•„ì´í…œ.jpg")
+ì•„ì´í…œ_ëª¨ìŠµ = pygame.transform.scale(ì•„ì´í…œ_ì´ë¯¸ì§€, (50, 50))
+ë°°ê²½_ì´ë¯¸ì§€ = pygame.image.load("C:\\Users\\wjdtn\\python\\game\\game\\ì´ë¯¸ì§€\\ë°°ê²½.jpg")
+ë°°ê²½ = pygame.transform.scale(ë°°ê²½_ì´ë¯¸ì§€, (í™”ë©´_ê°€ë¡œ, í™”ë©´_ì„¸ë¡œ))
 
-# È¿°úÀ½ ·Îµå
-Å¬¸®¾îÀ½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\CLEAR.mp3")
-Å¬¸®¾îÀ½_Àç»ý = False
-¿À¹öÀ½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\OVER.mp3")
-¿À¹öÀ½_Àç»ý = False
-Æø¹ßÀ½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Exp.mp3")
-Ãæµ¹À½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Cra.mp3")
-¹«ÀûÃæµ¹À½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Mu.mp3")
-¸ñ¼ûÁõ°¡À½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\life.ogg")
-¼ÓµµÀ½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\Sp.ogg")
+# íš¨ê³¼ìŒ ë¡œë“œ
+í´ë¦¬ì–´ìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\CLEAR.mp3")
+í´ë¦¬ì–´ìŒ_ìž¬ìƒ = False
+ì˜¤ë²„ìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\OVER.mp3")
+ì˜¤ë²„ìŒ_ìž¬ìƒ = False
+í­ë°œìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\Exp.mp3")
+ì¶©ëŒìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\Cra.mp3")
+ë¬´ì ì¶©ëŒìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\Mu.mp3")
+ëª©ìˆ¨ì¦ê°€ìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\life.ogg")
+ì†ë„ìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\Sp.ogg")
 
-# ¹è°æÀ½ ·Îµå
-¹è°æÀ½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\space.mp3")
-¹«Àû»óÅÂÀ½ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\more.mp3")
+# ë°°ê²½ìŒ ë¡œë“œ
+ë°°ê²½ìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\space.mp3")
+ë¬´ì ìƒíƒœìŒ = pygame.mixer.Sound("C:\\Users\\wjdtn\\python\\game\\game\\ìŒì•…\\more.mp3")
 
-# °ÔÀÓ Å¬¸®¾î ½Ã°£ ¼³Á¤ (ÃÊ ´ÜÀ§)
-°ÔÀÓ_Å¬¸®¾î_½Ã°£ = 60  # 1ºÐ
-Àå¾Ö¹°_»ý¼º_½Ã°£ = 0
-Àå¾Ö¹°_»ý¼º_°£°Ý = 0
+# ê²Œìž„ í´ë¦¬ì–´ ì‹œê°„ ì„¤ì • (ì´ˆ ë‹¨ìœ„)
+ê²Œìž„_í´ë¦¬ì–´_ì‹œê°„ = 60  # 1ë¶„
+ìž¥ì• ë¬¼_ìƒì„±_ì‹œê°„ = 0
+ìž¥ì• ë¬¼_ìƒì„±_ê°„ê²© = 0
 
-# »ö»ó ¼³Á¤
-Èò»ö = (255, 255, 255)
-°ËÀº»ö = (0, 0, 0)
-»¡°£»ö = (255, 0, 0)
-ÆÄ¶õ»ö = (0, 0, 255)
-³ë¶õ»ö = (255, 255, 0)  # »¡°­, ³ì»ö, ÆÄ¶û °ª
-ÃÊ·Ï»ö = (255, 0, 255)
+# ìƒ‰ìƒ ì„¤ì •
+í°ìƒ‰ = (255, 255, 255)
+ê²€ì€ìƒ‰ = (0, 0, 0)
+ë¹¨ê°„ìƒ‰ = (255, 0, 0)
+íŒŒëž€ìƒ‰ = (0, 0, 255)
+ë…¸ëž€ìƒ‰ = (255, 255, 0)  # ë¹¨ê°•, ë…¹ìƒ‰, íŒŒëž‘ ê°’
+ì´ˆë¡ìƒ‰ = (255, 0, 255)
 
-# °ÔÀÓ »óÅÂ
-°ÔÀÓ_ÁøÇàÁß = False
-°ÔÀÓ_¿À¹ö = False
-°ÔÀÓ_Å¬¸®¾î = False
+# ê²Œìž„ ìƒíƒœ
+ê²Œìž„_ì§„í–‰ì¤‘ = False
+ê²Œìž„_ì˜¤ë²„ = False
+ê²Œìž„_í´ë¦¬ì–´ = False
 
-# ¸ñ¼û ¼³Á¤
-¸ñ¼û = 3
+# ëª©ìˆ¨ ì„¤ì •
+ëª©ìˆ¨ = 3
 
-# Á¡¼ö ¼³Á¤
-Á¡¼ö = 0
+# ì ìˆ˜ ì„¤ì •
+ì ìˆ˜ = 0
 
-# ¾ÆÀÌÅÛ Á¾·ù
-¾ÆÀÌÅÛ_¸ñ·Ï = ["¹«Àû", "¸ñ¼ûÁõ°¡", "¼ÓµµÁõ°¡"]
-¾ÆÀÌÅÛ_»ý¼º_½Ã°£ = 0
-¾ÆÀÌÅÛ_»ý¼º_°£°Ý = 0
-¾ÆÀÌÅÛ_°¡·Î = 50
-¾ÆÀÌÅÛ_¼¼·Î = 50
-¾ÆÀÌÅÛ_¸®½ºÆ® = []
-¾ÆÀÌÅÛ_¼Óµµ = 0.5
+# ì•„ì´í…œ ì¢…ë¥˜
+ì•„ì´í…œ_ëª©ë¡ = ["ë¬´ì ", "ëª©ìˆ¨ì¦ê°€", "ì†ë„ì¦ê°€"]
+ì•„ì´í…œ_ìƒì„±_ì‹œê°„ = 0
+ì•„ì´í…œ_ìƒì„±_ê°„ê²© = 0
+ì•„ì´í…œ_ê°€ë¡œ = 50
+ì•„ì´í…œ_ì„¸ë¡œ = 50
+ì•„ì´í…œ_ë¦¬ìŠ¤íŠ¸ = []
+ì•„ì´í…œ_ì†ë„ = 0.5
 
-# Ä³¸¯ÅÍ ¼³Á¤
-Ä³¸¯ÅÍ_°¡·Î = 50
-Ä³¸¯ÅÍ_¼¼·Î = 50
-Ä³¸¯ÅÍ_À§Ä¡ = [È­¸é_°¡·Î / 2, È­¸é_¼¼·Î / 2]
-Ä³¸¯ÅÍ_¼Óµµ = 1
+# ìºë¦­í„° ì„¤ì •
+ìºë¦­í„°_ê°€ë¡œ = 50
+ìºë¦­í„°_ì„¸ë¡œ = 50
+ìºë¦­í„°_ìœ„ì¹˜ = [í™”ë©´_ê°€ë¡œ / 2, í™”ë©´_ì„¸ë¡œ / 2]
+ìºë¦­í„°_ì†ë„ = 1
 
-# Àå¾Ö¹° ¼³Á¤
-Àå¾Ö¹°_°¡·Î = 50
-Àå¾Ö¹°_¼¼·Î = 50
-Àå¾Ö¹°_¼Óµµ = 0.3  # Àå¾Ö¹°ÀÇ ÀÌµ¿ ¼Óµµ
-Àå¾Ö¹°_¸®½ºÆ® = []
+# ìž¥ì• ë¬¼ ì„¤ì •
+ìž¥ì• ë¬¼_ê°€ë¡œ = 50
+ìž¥ì• ë¬¼_ì„¸ë¡œ = 50
+ìž¥ì• ë¬¼_ì†ë„ = 0.3  # ìž¥ì• ë¬¼ì˜ ì´ë™ ì†ë„
+ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸ = []
 
-# ÃÑ¾Ë ¼³Á¤
-ÃÑ¾Ë_°¡·Î = 10
-ÃÑ¾Ë_¼¼·Î = 10
-ÃÑ¾Ë_¼Óµµ = 2  # ÃÑ¾ËÀÇ ÀÌµ¿ ¼Óµµ
-ÃÑ¾Ë_¸®½ºÆ® = []
-ÃÑ¾Ë_¹ß»ç_°£°Ý = 500  # ÃÑ¾ËÀ» ¹ß»çÇÏ´Â °£°Ý (¹Ð¸®ÃÊ ´ÜÀ§)
-¸¶Áö¸·_ÃÑ¾Ë_¹ß»ç_½Ã°£ = 0  # ÃÊ±â°ªÀº 0À¸·Î ¼³Á¤
+# ì´ì•Œ ì„¤ì •
+ì´ì•Œ_ê°€ë¡œ = 10
+ì´ì•Œ_ì„¸ë¡œ = 10
+ì´ì•Œ_ì†ë„ = 2  # ì´ì•Œì˜ ì´ë™ ì†ë„
+ì´ì•Œ_ë¦¬ìŠ¤íŠ¸ = []
+ì´ì•Œ_ë°œì‚¬_ê°„ê²© = 500  # ì´ì•Œì„ ë°œì‚¬í•˜ëŠ” ê°„ê²© (ë°€ë¦¬ì´ˆ ë‹¨ìœ„)
+ë§ˆì§€ë§‰_ì´ì•Œ_ë°œì‚¬_ì‹œê°„ = 0  # ì´ˆê¸°ê°’ì€ 0ìœ¼ë¡œ ì„¤ì •
 
-¹«Àû = False  # ¹«Àû »óÅÂ ¿©ºÎ¸¦ ³ªÅ¸³»´Â º¯¼ö
-¹«Àû_½ÃÀÛ_½Ã°£ = 0  # ¹«Àû »óÅÂ°¡ ½ÃÀÛµÈ ½Ã°£À» ÀúÀåÇÏ´Â º¯¼ö
-¹«Àû_Áö¼Ó_½Ã°£ = 5000  # ¹«Àû »óÅÂÀÇ Áö¼Ó ½Ã°£ (5ÃÊ)
-Áö±Ý_½Ã°£ = 0
+ë¬´ì  = False  # ë¬´ì  ìƒíƒœ ì—¬ë¶€ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë³€ìˆ˜
+ë¬´ì _ì‹œìž‘_ì‹œê°„ = 0  # ë¬´ì  ìƒíƒœê°€ ì‹œìž‘ëœ ì‹œê°„ì„ ì €ìž¥í•˜ëŠ” ë³€ìˆ˜
+ë¬´ì _ì§€ì†_ì‹œê°„ = 5000  # ë¬´ì  ìƒíƒœì˜ ì§€ì† ì‹œê°„ (5ì´ˆ)
+ì§€ê¸ˆ_ì‹œê°„ = 0
 
-def ¾ÆÀÌÅÛ_Ãæµ¹_°¨Áö():
-    for ¾ÆÀÌÅÛ in ¾ÆÀÌÅÛ_¸®½ºÆ®[:]:
-        if Ãæµ¹_°¨Áö(Ä³¸¯ÅÍ_À§Ä¡, Ä³¸¯ÅÍ_°¡·Î, Ä³¸¯ÅÍ_¼¼·Î, ¾ÆÀÌÅÛ['À§Ä¡'], ¾ÆÀÌÅÛ_°¡·Î, ¾ÆÀÌÅÛ_¼¼·Î):
-            ¾ÆÀÌÅÛ_¸®½ºÆ®.remove(¾ÆÀÌÅÛ)
-            ¾ÆÀÌÅÛ_È¹µæ(¾ÆÀÌÅÛ)
+def ì•„ì´í…œ_ì¶©ëŒ_ê°ì§€():
+    for ì•„ì´í…œ in ì•„ì´í…œ_ë¦¬ìŠ¤íŠ¸[:]:
+        if ì¶©ëŒ_ê°ì§€(ìºë¦­í„°_ìœ„ì¹˜, ìºë¦­í„°_ê°€ë¡œ, ìºë¦­í„°_ì„¸ë¡œ, ì•„ì´í…œ['ìœ„ì¹˜'], ì•„ì´í…œ_ê°€ë¡œ, ì•„ì´í…œ_ì„¸ë¡œ):
+            ì•„ì´í…œ_ë¦¬ìŠ¤íŠ¸.remove(ì•„ì´í…œ)
+            ì•„ì´í…œ_íšë“(ì•„ì´í…œ)
 
-def ¾ÆÀÌÅÛ_È¹µæ(¾ÆÀÌÅÛ):
-    È¹µæ_¾ÆÀÌÅÛ = random.choice(¾ÆÀÌÅÛ_¸ñ·Ï)
-    if È¹µæ_¾ÆÀÌÅÛ == "¹«Àû":
-        # ¹«Àû »óÅÂ·Î ¼³Á¤
-        global ¹«Àû
-        ¹è°æÀ½.stop()
-        ¹«Àû»óÅÂÀ½.play()
-        ¹«Àû = True
-    elif È¹µæ_¾ÆÀÌÅÛ == "¸ñ¼ûÁõ°¡":
-        # ¸ñ¼û Áõ°¡
-        global ¸ñ¼û
-        ¸ñ¼ûÁõ°¡À½.play()
-        ¸ñ¼û += 1
-    elif È¹µæ_¾ÆÀÌÅÛ == "¼ÓµµÁõ°¡":
-        # ¼Óµµ Áõ°¡
-        global Ä³¸¯ÅÍ_¼Óµµ
-        ¼ÓµµÀ½.play()
-        Ä³¸¯ÅÍ_¼Óµµ += 1
+def ì•„ì´í…œ_íšë“(ì•„ì´í…œ):
+    íšë“_ì•„ì´í…œ = random.choice(ì•„ì´í…œ_ëª©ë¡)
+    if íšë“_ì•„ì´í…œ == "ë¬´ì ":
+        # ë¬´ì  ìƒíƒœë¡œ ì„¤ì •
+        global ë¬´ì 
+        ë°°ê²½ìŒ.stop()
+        ë¬´ì ìƒíƒœìŒ.play()
+        ë¬´ì  = True
+    elif íšë“_ì•„ì´í…œ == "ëª©ìˆ¨ì¦ê°€":
+        # ëª©ìˆ¨ ì¦ê°€
+        global ëª©ìˆ¨
+        ëª©ìˆ¨ì¦ê°€ìŒ.play()
+        ëª©ìˆ¨ += 1
+    elif íšë“_ì•„ì´í…œ == "ì†ë„ì¦ê°€":
+        # ì†ë„ ì¦ê°€
+        global ìºë¦­í„°_ì†ë„
+        ì†ë„ìŒ.play()
+        ìºë¦­í„°_ì†ë„ += 1
 
-def ¾ÆÀÌÅÛ_»ý¼º():
-    # ¾ÆÀÌÅÛÀÇ À§Ä¡¸¦ ·£´ýÇÏ°Ô ¼³Á¤
-    return {'À§Ä¡': [random.randint(0, È­¸é_°¡·Î - ¾ÆÀÌÅÛ_°¡·Î), 0]}
+def ì•„ì´í…œ_ìƒì„±():
+    # ì•„ì´í…œì˜ ìœ„ì¹˜ë¥¼ ëžœë¤í•˜ê²Œ ì„¤ì •
+    return {'ìœ„ì¹˜': [random.randint(0, í™”ë©´_ê°€ë¡œ - ì•„ì´í…œ_ê°€ë¡œ), 0]}
 
-# ÃÑ¾Ë »ý¼º ÇÔ¼ö
-def ÃÑ¾Ë_»ý¼º(Ä³¸¯ÅÍ_À§Ä¡):
-    return [Ä³¸¯ÅÍ_À§Ä¡[0] + Ä³¸¯ÅÍ_°¡·Î // 2 - ÃÑ¾Ë_°¡·Î // 2, Ä³¸¯ÅÍ_À§Ä¡[1] - ÃÑ¾Ë_¼¼·Î]  # Ä³¸¯ÅÍ À§¿¡¼­ ÃÑ¾ËÀÌ ³ª¿À°Ô ¼³Á¤
+# ì´ì•Œ ìƒì„± í•¨ìˆ˜
+def ì´ì•Œ_ìƒì„±(ìºë¦­í„°_ìœ„ì¹˜):
+    return [ìºë¦­í„°_ìœ„ì¹˜[0] + ìºë¦­í„°_ê°€ë¡œ // 2 - ì´ì•Œ_ê°€ë¡œ // 2, ìºë¦­í„°_ìœ„ì¹˜[1] - ì´ì•Œ_ì„¸ë¡œ]  # ìºë¦­í„° ìœ„ì—ì„œ ì´ì•Œì´ ë‚˜ì˜¤ê²Œ ì„¤ì •
 
-# ÃÑ¾Ë ¾÷µ¥ÀÌÆ® ÇÔ¼ö
-def ÃÑ¾Ë_¾÷µ¥ÀÌÆ®():
-    for ÃÑ¾Ë_À§Ä¡ in ÃÑ¾Ë_¸®½ºÆ®:
-        ÃÑ¾Ë_À§Ä¡[1] -= ÃÑ¾Ë_¼Óµµ  # ÃÑ¾ËÀ» À§·Î ÀÌµ¿
-        # È­¸éÀ» ¹þ¾î³­ ÃÑ¾Ë Á¦°Å
-        if ÃÑ¾Ë_À§Ä¡[1] < 0:
-            ÃÑ¾Ë_¸®½ºÆ®.remove(ÃÑ¾Ë_À§Ä¡)
+# ì´ì•Œ ì—…ë°ì´íŠ¸ í•¨ìˆ˜
+def ì´ì•Œ_ì—…ë°ì´íŠ¸():
+    for ì´ì•Œ_ìœ„ì¹˜ in ì´ì•Œ_ë¦¬ìŠ¤íŠ¸:
+        ì´ì•Œ_ìœ„ì¹˜[1] -= ì´ì•Œ_ì†ë„  # ì´ì•Œì„ ìœ„ë¡œ ì´ë™
+        # í™”ë©´ì„ ë²—ì–´ë‚œ ì´ì•Œ ì œê±°
+        if ì´ì•Œ_ìœ„ì¹˜[1] < 0:
+            ì´ì•Œ_ë¦¬ìŠ¤íŠ¸.remove(ì´ì•Œ_ìœ„ì¹˜)
 
-# Ãæµ¹ °¨Áö ÇÔ¼ö (ÃÑ¾Ë°ú Àå¾Ö¹° °£ÀÇ Ãæµ¹)
-def ÃÑ¾Ë_Àå¾Ö¹°_Ãæµ¹_°¨Áö():
-    for ÃÑ¾Ë_À§Ä¡ in ÃÑ¾Ë_¸®½ºÆ®:
-        for Àå¾Ö¹°_À§Ä¡ in Àå¾Ö¹°_¸®½ºÆ®:
-            if Ãæµ¹_°¨Áö(ÃÑ¾Ë_À§Ä¡, ÃÑ¾Ë_°¡·Î, ÃÑ¾Ë_¼¼·Î, Àå¾Ö¹°_À§Ä¡, Àå¾Ö¹°_°¡·Î, Àå¾Ö¹°_¼¼·Î):
-                Æø¹ßÀ½.play()
-                ÃÑ¾Ë_¸®½ºÆ®.remove(ÃÑ¾Ë_À§Ä¡)
-                Àå¾Ö¹°_¸®½ºÆ®.remove(Àå¾Ö¹°_À§Ä¡)
-                global Á¡¼ö
-                Á¡¼ö = Á¡¼ö + 50  # Á¡¼ö 50Á¡ Ãß°¡
-                if Á¡¼ö % 1000 == 0:  # 1000Á¡ ´ÜÀ§·Î Á¡¼ö¸¦ È¹µæÇÒ ¶§¸¶´Ù ¸ñ¼ûÀ» ÇÏ³ª¾¿ ´Ã¸³´Ï´Ù.
-                    global ¸ñ¼û
-                    ¸ñ¼û += 1
+# ì¶©ëŒ ê°ì§€ í•¨ìˆ˜ (ì´ì•Œê³¼ ìž¥ì• ë¬¼ ê°„ì˜ ì¶©ëŒ)
+def ì´ì•Œ_ìž¥ì• ë¬¼_ì¶©ëŒ_ê°ì§€():
+    for ì´ì•Œ_ìœ„ì¹˜ in ì´ì•Œ_ë¦¬ìŠ¤íŠ¸:
+        for ìž¥ì• ë¬¼_ìœ„ì¹˜ in ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸:
+            if ì¶©ëŒ_ê°ì§€(ì´ì•Œ_ìœ„ì¹˜, ì´ì•Œ_ê°€ë¡œ, ì´ì•Œ_ì„¸ë¡œ, ìž¥ì• ë¬¼_ìœ„ì¹˜, ìž¥ì• ë¬¼_ê°€ë¡œ, ìž¥ì• ë¬¼_ì„¸ë¡œ):
+                í­ë°œìŒ.play()
+                ì´ì•Œ_ë¦¬ìŠ¤íŠ¸.remove(ì´ì•Œ_ìœ„ì¹˜)
+                ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸.remove(ìž¥ì• ë¬¼_ìœ„ì¹˜)
+                global ì ìˆ˜
+                ì ìˆ˜ = ì ìˆ˜ + 50  # ì ìˆ˜ 50ì  ì¶”ê°€
+                if ì ìˆ˜ % 1000 == 0:  # 1000ì  ë‹¨ìœ„ë¡œ ì ìˆ˜ë¥¼ íšë“í•  ë•Œë§ˆë‹¤ ëª©ìˆ¨ì„ í•˜ë‚˜ì”© ëŠ˜ë¦½ë‹ˆë‹¤.
+                    global ëª©ìˆ¨
+                    ëª©ìˆ¨ += 1
                 break
 
-# ÃÑ¾Ë Å¬·¡½º
-class ÃÑ¾Ë:
-    def __init__(self, À§Ä¡, ¼Óµµ):
-        self.À§Ä¡ = À§Ä¡
-        self.¼Óµµ = ¼Óµµ
+# ì´ì•Œ í´ëž˜ìŠ¤
+class ì´ì•Œ:
+    def __init__(self, ìœ„ì¹˜, ì†ë„):
+        self.ìœ„ì¹˜ = ìœ„ì¹˜
+        self.ì†ë„ = ì†ë„
 
-# Àå¾Ö¹° »ý¼º ÇÔ¼ö
-def Àå¾Ö¹°_»ý¼º():
-    return [random.randint(0, È­¸é_°¡·Î - Àå¾Ö¹°_°¡·Î), 0]  # È­¸é »ó´Ü¿¡¼­ ½ÃÀÛ
+# ìž¥ì• ë¬¼ ìƒì„± í•¨ìˆ˜
+def ìž¥ì• ë¬¼_ìƒì„±():
+    return [random.randint(0, í™”ë©´_ê°€ë¡œ - ìž¥ì• ë¬¼_ê°€ë¡œ), 0]  # í™”ë©´ ìƒë‹¨ì—ì„œ ì‹œìž‘
 
-# Àå¾Ö¹°°ú ÃÑ¾ËÀÇ Ãæµ¹ °¨Áö ÇÔ¼ö
-def Ãæµ¹_°¨Áö(°´Ã¼1_À§Ä¡, °´Ã¼1_°¡·Î, °´Ã¼1_¼¼·Î, °´Ã¼2_À§Ä¡, °´Ã¼2_°¡·Î, °´Ã¼2_¼¼·Î):
-    °´Ã¼1_x, °´Ã¼1_y = °´Ã¼1_À§Ä¡
-    °´Ã¼2_x, °´Ã¼2_y = °´Ã¼2_À§Ä¡
+# ìž¥ì• ë¬¼ê³¼ ì´ì•Œì˜ ì¶©ëŒ ê°ì§€ í•¨ìˆ˜
+def ì¶©ëŒ_ê°ì§€(ê°ì²´1_ìœ„ì¹˜, ê°ì²´1_ê°€ë¡œ, ê°ì²´1_ì„¸ë¡œ, ê°ì²´2_ìœ„ì¹˜, ê°ì²´2_ê°€ë¡œ, ê°ì²´2_ì„¸ë¡œ):
+    ê°ì²´1_x, ê°ì²´1_y = ê°ì²´1_ìœ„ì¹˜
+    ê°ì²´2_x, ê°ì²´2_y = ê°ì²´2_ìœ„ì¹˜
 
-    return True if (°´Ã¼1_x < °´Ã¼2_x + °´Ã¼2_°¡·Î and °´Ã¼1_x + °´Ã¼1_°¡·Î > °´Ã¼2_x and °´Ã¼1_y < °´Ã¼2_y + °´Ã¼2_¼¼·Î and °´Ã¼1_y + °´Ã¼1_¼¼·Î > °´Ã¼2_y) else False
+    return True if (ê°ì²´1_x < ê°ì²´2_x + ê°ì²´2_ê°€ë¡œ and ê°ì²´1_x + ê°ì²´1_ê°€ë¡œ > ê°ì²´2_x and ê°ì²´1_y < ê°ì²´2_y + ê°ì²´2_ì„¸ë¡œ and ê°ì²´1_y + ê°ì²´1_ì„¸ë¡œ > ê°ì²´2_y) else False
 
-# °ÔÀÓ ¿À¹ö ÇÔ¼ö
-def °ÔÀÓ_´Ù½Ã_½ÃÀÛ():
-    global ¹è°æÀ½, ¹«Àû, ¸ñ¼û, Á¡¼ö, Ä³¸¯ÅÍ_À§Ä¡, Ä³¸¯ÅÍ_¼Óµµ, Àå¾Ö¹°_¸®½ºÆ®, ¾ÆÀÌÅÛ_¸®½ºÆ®, Ä³¸¯ÅÍ_À§Ä¡, °ÔÀÓ_½ÃÀÛ_½Ã°£
-    ¹è°æÀ½.play(-1)
-    ¹«Àû = False
-    ¸ñ¼û = 3
-    Á¡¼ö = 0
-    Ä³¸¯ÅÍ_¼Óµµ = 1
-    Àå¾Ö¹°_¸®½ºÆ® = []  # Àå¾Ö¹° ¸®½ºÆ® ÃÊ±âÈ­
-    ¾ÆÀÌÅÛ_¸®½ºÆ® = []
-    # Àå¾Ö¹° À§Ä¡ ÃÊ±âÈ­
-    Àå¾Ö¹°_À§Ä¡[0] = random.randint(0, È­¸é_°¡·Î - Àå¾Ö¹°_°¡·Î)
-    Àå¾Ö¹°_À§Ä¡[1] = 0
-    Ä³¸¯ÅÍ_À§Ä¡ = [È­¸é_°¡·Î / 2, È­¸é_¼¼·Î / 2]
-    °ÔÀÓ_½ÃÀÛ_½Ã°£ = pygame.time.get_ticks()
+# ê²Œìž„ ì˜¤ë²„ í•¨ìˆ˜
+def ê²Œìž„_ë‹¤ì‹œ_ì‹œìž‘():
+    global ë°°ê²½ìŒ, ë¬´ì , ëª©ìˆ¨, ì ìˆ˜, ìºë¦­í„°_ìœ„ì¹˜, ìºë¦­í„°_ì†ë„, ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸, ì•„ì´í…œ_ë¦¬ìŠ¤íŠ¸, ìºë¦­í„°_ìœ„ì¹˜, ê²Œìž„_ì‹œìž‘_ì‹œê°„
+    ë°°ê²½ìŒ.play(-1)
+    ë¬´ì  = False
+    ëª©ìˆ¨ = 3
+    ì ìˆ˜ = 0
+    ìºë¦­í„°_ì†ë„ = 1
+    ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸ = []  # ìž¥ì• ë¬¼ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+    ì•„ì´í…œ_ë¦¬ìŠ¤íŠ¸ = []
+    # ìž¥ì• ë¬¼ ìœ„ì¹˜ ì´ˆê¸°í™”
+    ìž¥ì• ë¬¼_ìœ„ì¹˜[0] = random.randint(0, í™”ë©´_ê°€ë¡œ - ìž¥ì• ë¬¼_ê°€ë¡œ)
+    ìž¥ì• ë¬¼_ìœ„ì¹˜[1] = 0
+    ìºë¦­í„°_ìœ„ì¹˜ = [í™”ë©´_ê°€ë¡œ / 2, í™”ë©´_ì„¸ë¡œ / 2]
+    ê²Œìž„_ì‹œìž‘_ì‹œê°„ = pygame.time.get_ticks()
 
-# °ÔÀÓ ¿À¹ö È­¸é Ç¥½Ã ÇÔ¼ö
-def °ÔÀÓ_¿À¹ö_È­¸é():
-    global ¿À¹öÀ½_Àç»ý
-    if not ¿À¹öÀ½_Àç»ý:
-        ¿À¹öÀ½.set_volume(0.7)
-        ¿À¹öÀ½.play()
-        ¿À¹öÀ½_Àç»ý = True
-    È­¸é.fill(Èò»ö)
+# ê²Œìž„ ì˜¤ë²„ í™”ë©´ í‘œì‹œ í•¨ìˆ˜
+def ê²Œìž„_ì˜¤ë²„_í™”ë©´():
+    global ì˜¤ë²„ìŒ_ìž¬ìƒ
+    if not ì˜¤ë²„ìŒ_ìž¬ìƒ:
+        ì˜¤ë²„ìŒ.set_volume(0.7)
+        ì˜¤ë²„ìŒ.play()
+        ì˜¤ë²„ìŒ_ìž¬ìƒ = True
+    í™”ë©´.fill(í°ìƒ‰)
     font_path = "C:\Windows\Fonts\HMKBA.TTF"
     font_korea = "C:\Windows\Fonts\YTTE08.TTF"
-    ÆùÆ® = pygame.font.Font(font_path, 48)
-    ¿À¹ö_ÅØ½ºÆ® = ÆùÆ®.render("GAME OVER!", True, »¡°£»ö)
-    È­¸é.blit(¿À¹ö_ÅØ½ºÆ®, (300, 250))
-    ÆùÆ®2 = pygame.font.Font(font_korea, 20)
-    Àç½ÃÀÛ_ÅØ½ºÆ® = ÆùÆ®2.render("´Ù½Ã ½ÃÀÛÇÏ·Á¸é R Å°¸¦ ´©¸£¼¼¿ä.", True, °ËÀº»ö)
-    È­¸é.blit(Àç½ÃÀÛ_ÅØ½ºÆ®, (280, 300))
+    í°íŠ¸ = pygame.font.Font(font_path, 48)
+    ì˜¤ë²„_í…ìŠ¤íŠ¸ = í°íŠ¸.render("GAME OVER!", True, ë¹¨ê°„ìƒ‰)
+    í™”ë©´.blit(ì˜¤ë²„_í…ìŠ¤íŠ¸, (300, 250))
+    í°íŠ¸2 = pygame.font.Font(font_korea, 20)
+    ìž¬ì‹œìž‘_í…ìŠ¤íŠ¸ = í°íŠ¸2.render("ë‹¤ì‹œ ì‹œìž‘í•˜ë ¤ë©´ R í‚¤ë¥¼ ëˆ„ë¥´ì„¸ìš”.", True, ê²€ì€ìƒ‰)
+    í™”ë©´.blit(ìž¬ì‹œìž‘_í…ìŠ¤íŠ¸, (280, 300))
     pygame.display.update()
 
-# °ÔÀÓ Å¬¸®¾î È­¸é Ç¥½Ã ÇÔ¼ö
-def °ÔÀÓ_Å¬¸®¾î_È­¸é():
-    global Å¬¸®¾îÀ½_Àç»ý
-    if not Å¬¸®¾îÀ½_Àç»ý:
-        Å¬¸®¾îÀ½.set_volume(0.7)
-        Å¬¸®¾îÀ½.play()
-        Å¬¸®¾îÀ½_Àç»ý = True
-    È­¸é.fill(Èò»ö)
+# ê²Œìž„ í´ë¦¬ì–´ í™”ë©´ í‘œì‹œ í•¨ìˆ˜
+def ê²Œìž„_í´ë¦¬ì–´_í™”ë©´():
+    global í´ë¦¬ì–´ìŒ_ìž¬ìƒ
+    if not í´ë¦¬ì–´ìŒ_ìž¬ìƒ:
+        í´ë¦¬ì–´ìŒ.set_volume(0.7)
+        í´ë¦¬ì–´ìŒ.play()
+        í´ë¦¬ì–´ìŒ_ìž¬ìƒ = True
+    í™”ë©´.fill(í°ìƒ‰)
     font_path = "C:\Windows\Fonts\HMKBA.TTF"
     font_korea = "C:\Windows\Fonts\YTTE08.TTF"
-    ÆùÆ® = pygame.font.Font(font_path, 48)
-    Å¬¸®¾î_ÅØ½ºÆ® = ÆùÆ®.render("GAME CLEAR!", True, °ËÀº»ö)
-    È­¸é.blit(Å¬¸®¾î_ÅØ½ºÆ®, (300, 250))
-    ÆùÆ®2 = pygame.font.Font(font_korea, 20)
-    Àç½ÃÀÛ_ÅØ½ºÆ® = ÆùÆ®2.render("´Ù½Ã ½ÃÀÛÇÏ·Á¸é R Å°¸¦ ´©¸£¼¼¿ä.", True, °ËÀº»ö)
-    È­¸é.blit(Àç½ÃÀÛ_ÅØ½ºÆ®, (300, 350))
-    Á¡¼ö_ÅØ½ºÆ® = ÆùÆ®.render(f'SCORE: {Á¡¼ö*¸ñ¼û}', True, °ËÀº»ö)
-    È­¸é.blit(Á¡¼ö_ÅØ½ºÆ®, (300, 300))
+    í°íŠ¸ = pygame.font.Font(font_path, 48)
+    í´ë¦¬ì–´_í…ìŠ¤íŠ¸ = í°íŠ¸.render("GAME CLEAR!", True, ê²€ì€ìƒ‰)
+    í™”ë©´.blit(í´ë¦¬ì–´_í…ìŠ¤íŠ¸, (300, 250))
+    í°íŠ¸2 = pygame.font.Font(font_korea, 20)
+    ìž¬ì‹œìž‘_í…ìŠ¤íŠ¸ = í°íŠ¸2.render("ë‹¤ì‹œ ì‹œìž‘í•˜ë ¤ë©´ R í‚¤ë¥¼ ëˆ„ë¥´ì„¸ìš”.", True, ê²€ì€ìƒ‰)
+    í™”ë©´.blit(ìž¬ì‹œìž‘_í…ìŠ¤íŠ¸, (300, 350))
+    ì ìˆ˜_í…ìŠ¤íŠ¸ = í°íŠ¸.render(f'SCORE: {ì ìˆ˜*ëª©ìˆ¨}', True, ê²€ì€ìƒ‰)
+    í™”ë©´.blit(ì ìˆ˜_í…ìŠ¤íŠ¸, (300, 300))
     pygame.display.update()
 
-def °ÔÀÓ_ÇÃ·¹ÀÌ_¹æ¹ý_È­¸é():
-    È­¸é.fill(Èò»ö)
+def ê²Œìž„_í”Œë ˆì´_ë°©ë²•_í™”ë©´():
+    í™”ë©´.fill(í°ìƒ‰)
     font_path = "C:\Windows\Fonts\HMKBA.TTF"
-    ÆùÆ® = pygame.font.Font(font_path, 36)
-    ¼³¸í_ÅØ½ºÆ®1 = ÆùÆ®.render("°ÔÀÓ ÇÃ·¹ÀÌ ¹æ¹ý", True, °ËÀº»ö)
-    ¼³¸í_ÅØ½ºÆ®2 = ÆùÆ®.render("ÁÂ¿ì È­»ìÇ¥ Å°·Î ¿ìÁÖ¼±À» ÀÌµ¿½ÃÅµ´Ï´Ù.", True, °ËÀº»ö)
-    ¼³¸í_ÅØ½ºÆ®3 = ÆùÆ®.render("À§ÂÊ È­»ìÇ¥ Å°·Î ¿ìÁÖ¼±À» À§·Î ÀÌµ¿½ÃÅµ´Ï´Ù.", True, °ËÀº»ö)
-    ¼³¸í_ÅØ½ºÆ®4 = ÆùÆ®.render("¾Æ·¡ÂÊ È­»ìÇ¥ Å°·Î ¿ìÁÖ¼±À» ¾Æ·¡·Î ÀÌµ¿½ÃÅµ´Ï´Ù.", True, °ËÀº»ö)
-    ¼³¸í_ÅØ½ºÆ®5 = ÆùÆ®.render("½ºÆäÀÌ½º¹Ù¸¦ ´­·¯ ÃÑ¾ËÀ» ¹ß»çÇÕ´Ï´Ù.", True, °ËÀº»ö)
-    ¼³¸í_ÅØ½ºÆ®6 = ÆùÆ®.render("°ÔÀÓÀ» ½ÃÀÛÇÏ·Á¸é ¾Æ¹« Å°³ª ´©¸£¼¼¿ä.", True, °ËÀº»ö)
+    í°íŠ¸ = pygame.font.Font(font_path, 36)
+    ì„¤ëª…_í…ìŠ¤íŠ¸1 = í°íŠ¸.render("ê²Œìž„ í”Œë ˆì´ ë°©ë²•", True, ê²€ì€ìƒ‰)
+    ì„¤ëª…_í…ìŠ¤íŠ¸2 = í°íŠ¸.render("ì¢Œìš° í™”ì‚´í‘œ í‚¤ë¡œ ìš°ì£¼ì„ ì„ ì´ë™ì‹œí‚µë‹ˆë‹¤.", True, ê²€ì€ìƒ‰)
+    ì„¤ëª…_í…ìŠ¤íŠ¸3 = í°íŠ¸.render("ìœ„ìª½ í™”ì‚´í‘œ í‚¤ë¡œ ìš°ì£¼ì„ ì„ ìœ„ë¡œ ì´ë™ì‹œí‚µë‹ˆë‹¤.", True, ê²€ì€ìƒ‰)
+    ì„¤ëª…_í…ìŠ¤íŠ¸4 = í°íŠ¸.render("ì•„ëž˜ìª½ í™”ì‚´í‘œ í‚¤ë¡œ ìš°ì£¼ì„ ì„ ì•„ëž˜ë¡œ ì´ë™ì‹œí‚µë‹ˆë‹¤.", True, ê²€ì€ìƒ‰)
+    ì„¤ëª…_í…ìŠ¤íŠ¸5 = í°íŠ¸.render("ìŠ¤íŽ˜ì´ìŠ¤ë°”ë¥¼ ëˆŒëŸ¬ ì´ì•Œì„ ë°œì‚¬í•©ë‹ˆë‹¤.", True, ê²€ì€ìƒ‰)
+    ì„¤ëª…_í…ìŠ¤íŠ¸6 = í°íŠ¸.render("ê²Œìž„ì„ ì‹œìž‘í•˜ë ¤ë©´ ì•„ë¬´ í‚¤ë‚˜ ëˆ„ë¥´ì„¸ìš”.", True, ê²€ì€ìƒ‰)
 
-    È­¸é.blit(¼³¸í_ÅØ½ºÆ®1, (300, 100))
-    È­¸é.blit(¼³¸í_ÅØ½ºÆ®2, (200, 200))
-    È­¸é.blit(¼³¸í_ÅØ½ºÆ®3, (200, 250))
-    È­¸é.blit(¼³¸í_ÅØ½ºÆ®4, (200, 300))
-    È­¸é.blit(¼³¸í_ÅØ½ºÆ®5, (200, 350))
-    È­¸é.blit(¼³¸í_ÅØ½ºÆ®6, (200, 450))
+    í™”ë©´.blit(ì„¤ëª…_í…ìŠ¤íŠ¸1, (300, 100))
+    í™”ë©´.blit(ì„¤ëª…_í…ìŠ¤íŠ¸2, (200, 200))
+    í™”ë©´.blit(ì„¤ëª…_í…ìŠ¤íŠ¸3, (200, 250))
+    í™”ë©´.blit(ì„¤ëª…_í…ìŠ¤íŠ¸4, (200, 300))
+    í™”ë©´.blit(ì„¤ëª…_í…ìŠ¤íŠ¸5, (200, 350))
+    í™”ë©´.blit(ì„¤ëª…_í…ìŠ¤íŠ¸6, (200, 450))
 
     pygame.display.update()
 
-# °ÔÀÓ ÇÃ·¹ÀÌ ¹æ¹ý È­¸é Ç¥½Ã
-°ÔÀÓ_ÇÃ·¹ÀÌ_¹æ¹ý_È­¸é()
+# ê²Œìž„ í”Œë ˆì´ ë°©ë²• í™”ë©´ í‘œì‹œ
+ê²Œìž„_í”Œë ˆì´_ë°©ë²•_í™”ë©´()
 
-# »ç¿ëÀÚÀÇ ÀÔ·Â ´ë±â
+# ì‚¬ìš©ìžì˜ ìž…ë ¥ ëŒ€ê¸°
 while True:
     for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:  # ¾Æ¹« Å°³ª ´©¸£¸é °ÔÀÓ ½ÃÀÛ
-            °ÔÀÓ_ÁøÇàÁß = True
-            °ÔÀÓ_½ÃÀÛ_½Ã°£ = pygame.time.get_ticks()  # °ÔÀÓ ½ÃÀÛ ½Ã°£
-            ¹è°æÀ½.play(-1)
-            ¹è°æÀ½.set_volume(0.1)
+        if event.type == pygame.KEYDOWN:  # ì•„ë¬´ í‚¤ë‚˜ ëˆ„ë¥´ë©´ ê²Œìž„ ì‹œìž‘
+            ê²Œìž„_ì§„í–‰ì¤‘ = True
+            ê²Œìž„_ì‹œìž‘_ì‹œê°„ = pygame.time.get_ticks()  # ê²Œìž„ ì‹œìž‘ ì‹œê°„
+            ë°°ê²½ìŒ.play(-1)
+            ë°°ê²½ìŒ.set_volume(0.1)
             break
-        elif event.type == pygame.QUIT:  # Á¾·á ÀÌº¥Æ® Ã³¸®
+        elif event.type == pygame.QUIT:  # ì¢…ë£Œ ì´ë²¤íŠ¸ ì²˜ë¦¬
             pygame.quit()
             sys.exit()  
-    if °ÔÀÓ_ÁøÇàÁß:
-        break  # °ÔÀÓÀÌ ½ÃÀÛµÇ¾úÀ¸¸é ÀÔ·Â ´ë±â ·çÇÁ¸¦ Á¾·á
+    if ê²Œìž„_ì§„í–‰ì¤‘:
+        break  # ê²Œìž„ì´ ì‹œìž‘ë˜ì—ˆìœ¼ë©´ ìž…ë ¥ ëŒ€ê¸° ë£¨í”„ë¥¼ ì¢…ë£Œ
 
-# °ÔÀÓ ·çÇÁ
-while °ÔÀÓ_ÁøÇàÁß:
-    ÇöÀç_½Ã°£ = pygame.time.get_ticks()
-    °æ°ú_½Ã°£ = (ÇöÀç_½Ã°£ - °ÔÀÓ_½ÃÀÛ_½Ã°£) / 1000  # °æ°ú ½Ã°£ (ÃÊ ´ÜÀ§·Î º¯È¯)
-    ³²Àº_½Ã°£ = °ÔÀÓ_Å¬¸®¾î_½Ã°£ - °æ°ú_½Ã°£  # °ÔÀÓ Å¬¸®¾î±îÁö ³²Àº ½Ã°£ °è»ê
+# ê²Œìž„ ë£¨í”„
+while ê²Œìž„_ì§„í–‰ì¤‘:
+    í˜„ìž¬_ì‹œê°„ = pygame.time.get_ticks()
+    ê²½ê³¼_ì‹œê°„ = (í˜„ìž¬_ì‹œê°„ - ê²Œìž„_ì‹œìž‘_ì‹œê°„) / 1000  # ê²½ê³¼ ì‹œê°„ (ì´ˆ ë‹¨ìœ„ë¡œ ë³€í™˜)
+    ë‚¨ì€_ì‹œê°„ = ê²Œìž„_í´ë¦¬ì–´_ì‹œê°„ - ê²½ê³¼_ì‹œê°„  # ê²Œìž„ í´ë¦¬ì–´ê¹Œì§€ ë‚¨ì€ ì‹œê°„ ê³„ì‚°
 
-    È­¸é.blit(¹è°æ, (0, 0))
-    Å°_ÀÔ·Â = pygame.key.get_pressed()
+    í™”ë©´.blit(ë°°ê²½, (0, 0))
+    í‚¤_ìž…ë ¥ = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
-    if °ÔÀÓ_¿À¹ö or °ÔÀÓ_Å¬¸®¾î:
-        if Å°_ÀÔ·Â[pygame.K_r]:  # °ÔÀÓ ¿À¹ö ÈÄ R Å°¸¦ ´©¸£¸é Àç½ÃÀÛ
-            Å¬¸®¾îÀ½_Àç»ý = False
-            ¿À¹öÀ½_Àç»ý = False
-            °ÔÀÓ_¿À¹ö = False
-            °ÔÀÓ_Å¬¸®¾î = False
-            °ÔÀÓ_´Ù½Ã_½ÃÀÛ()
+    if ê²Œìž„_ì˜¤ë²„ or ê²Œìž„_í´ë¦¬ì–´:
+        if í‚¤_ìž…ë ¥[pygame.K_r]:  # ê²Œìž„ ì˜¤ë²„ í›„ R í‚¤ë¥¼ ëˆ„ë¥´ë©´ ìž¬ì‹œìž‘
+            í´ë¦¬ì–´ìŒ_ìž¬ìƒ = False
+            ì˜¤ë²„ìŒ_ìž¬ìƒ = False
+            ê²Œìž„_ì˜¤ë²„ = False
+            ê²Œìž„_í´ë¦¬ì–´ = False
+            ê²Œìž„_ë‹¤ì‹œ_ì‹œìž‘()
 
-    if Å°_ÀÔ·Â[pygame.K_LEFT]:
-        Ä³¸¯ÅÍ_À§Ä¡[0] -= Ä³¸¯ÅÍ_¼Óµµ
-    if Å°_ÀÔ·Â[pygame.K_RIGHT]:
-        Ä³¸¯ÅÍ_À§Ä¡[0] += Ä³¸¯ÅÍ_¼Óµµ
-    if Å°_ÀÔ·Â[pygame.K_UP]:
-        Ä³¸¯ÅÍ_À§Ä¡[1] -= Ä³¸¯ÅÍ_¼Óµµ
-    if Å°_ÀÔ·Â[pygame.K_DOWN]:
-        Ä³¸¯ÅÍ_À§Ä¡[1] += Ä³¸¯ÅÍ_¼Óµµ
-    if Å°_ÀÔ·Â[pygame.K_SPACE]:
-        if ÇöÀç_½Ã°£ - ¸¶Áö¸·_ÃÑ¾Ë_¹ß»ç_½Ã°£ >= ÃÑ¾Ë_¹ß»ç_°£°Ý:
-            ÃÑ¾Ë_¸®½ºÆ®.append(ÃÑ¾Ë_»ý¼º(Ä³¸¯ÅÍ_À§Ä¡))
-            ¸¶Áö¸·_ÃÑ¾Ë_¹ß»ç_½Ã°£ = ÇöÀç_½Ã°£
+    if í‚¤_ìž…ë ¥[pygame.K_LEFT]:
+        ìºë¦­í„°_ìœ„ì¹˜[0] -= ìºë¦­í„°_ì†ë„
+    if í‚¤_ìž…ë ¥[pygame.K_RIGHT]:
+        ìºë¦­í„°_ìœ„ì¹˜[0] += ìºë¦­í„°_ì†ë„
+    if í‚¤_ìž…ë ¥[pygame.K_UP]:
+        ìºë¦­í„°_ìœ„ì¹˜[1] -= ìºë¦­í„°_ì†ë„
+    if í‚¤_ìž…ë ¥[pygame.K_DOWN]:
+        ìºë¦­í„°_ìœ„ì¹˜[1] += ìºë¦­í„°_ì†ë„
+    if í‚¤_ìž…ë ¥[pygame.K_SPACE]:
+        if í˜„ìž¬_ì‹œê°„ - ë§ˆì§€ë§‰_ì´ì•Œ_ë°œì‚¬_ì‹œê°„ >= ì´ì•Œ_ë°œì‚¬_ê°„ê²©:
+            ì´ì•Œ_ë¦¬ìŠ¤íŠ¸.append(ì´ì•Œ_ìƒì„±(ìºë¦­í„°_ìœ„ì¹˜))
+            ë§ˆì§€ë§‰_ì´ì•Œ_ë°œì‚¬_ì‹œê°„ = í˜„ìž¬_ì‹œê°„
 
-    # Ä³¸¯ÅÍ°¡ È­¸é ¹ÛÀ¸·Î ³ª°¡Áö ¾Êµµ·Ï Á¦ÇÑ
-    Ä³¸¯ÅÍ_À§Ä¡[0] = max(0, min(È­¸é_°¡·Î - Ä³¸¯ÅÍ_°¡·Î, Ä³¸¯ÅÍ_À§Ä¡[0]))
-    Ä³¸¯ÅÍ_À§Ä¡[1] = max(0, min(È­¸é_¼¼·Î - Ä³¸¯ÅÍ_¼¼·Î, Ä³¸¯ÅÍ_À§Ä¡[1]))
+    # ìºë¦­í„°ê°€ í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ì§€ ì•Šë„ë¡ ì œí•œ
+    ìºë¦­í„°_ìœ„ì¹˜[0] = max(0, min(í™”ë©´_ê°€ë¡œ - ìºë¦­í„°_ê°€ë¡œ, ìºë¦­í„°_ìœ„ì¹˜[0]))
+    ìºë¦­í„°_ìœ„ì¹˜[1] = max(0, min(í™”ë©´_ì„¸ë¡œ - ìºë¦­í„°_ì„¸ë¡œ, ìºë¦­í„°_ìœ„ì¹˜[1]))
 
-    # ÃÑ¾Ë ¾÷µ¥ÀÌÆ®
-    ÃÑ¾Ë_¾÷µ¥ÀÌÆ®()
+    # ì´ì•Œ ì—…ë°ì´íŠ¸
+    ì´ì•Œ_ì—…ë°ì´íŠ¸()
     
-    # ÃÑ¾Ë°ú Àå¾Ö¹° Ãæµ¹ °¨Áö
-    ÃÑ¾Ë_Àå¾Ö¹°_Ãæµ¹_°¨Áö()
+    # ì´ì•Œê³¼ ìž¥ì• ë¬¼ ì¶©ëŒ ê°ì§€
+    ì´ì•Œ_ìž¥ì• ë¬¼_ì¶©ëŒ_ê°ì§€()
 
-    # Àå¾Ö¹° »ý¼º ¹× ¾÷µ¥ÀÌÆ®
-    if not °ÔÀÓ_¿À¹ö and not °ÔÀÓ_Å¬¸®¾î:
-        if ÇöÀç_½Ã°£ - Àå¾Ö¹°_»ý¼º_½Ã°£ >= Àå¾Ö¹°_»ý¼º_°£°Ý:
-            Àå¾Ö¹°_»ý¼º_½Ã°£ = ÇöÀç_½Ã°£
-            Àå¾Ö¹°_¸®½ºÆ®.append(Àå¾Ö¹°_»ý¼º())
-            Àå¾Ö¹°_»ý¼º_°£°Ý = random.uniform(0.5, 1.5) * 1000  # Àå¾Ö¹° »ý¼º °£°ÝÀ» 0.5ÃÊ¿¡¼­ 1.5ÃÊ »çÀÌ·Î ·£´ý ¼³Á¤
+    # ìž¥ì• ë¬¼ ìƒì„± ë° ì—…ë°ì´íŠ¸
+    if not ê²Œìž„_ì˜¤ë²„ and not ê²Œìž„_í´ë¦¬ì–´:
+        if í˜„ìž¬_ì‹œê°„ - ìž¥ì• ë¬¼_ìƒì„±_ì‹œê°„ >= ìž¥ì• ë¬¼_ìƒì„±_ê°„ê²©:
+            ìž¥ì• ë¬¼_ìƒì„±_ì‹œê°„ = í˜„ìž¬_ì‹œê°„
+            ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸.append(ìž¥ì• ë¬¼_ìƒì„±())
+            ìž¥ì• ë¬¼_ìƒì„±_ê°„ê²© = random.uniform(0.5, 1.5) * 1000  # ìž¥ì• ë¬¼ ìƒì„± ê°„ê²©ì„ 0.5ì´ˆì—ì„œ 1.5ì´ˆ ì‚¬ì´ë¡œ ëžœë¤ ì„¤ì •
 
-    # ÃÑ¾Ë ±×¸®±â
-    if ³²Àº_½Ã°£ > 0:
-        for ÃÑ¾Ë in ÃÑ¾Ë_¸®½ºÆ®:
-            pygame.draw.rect(È­¸é, »¡°£»ö, (ÃÑ¾Ë[0], ÃÑ¾Ë[1], ÃÑ¾Ë_°¡·Î, ÃÑ¾Ë_¼¼·Î))
+    # ì´ì•Œ ê·¸ë¦¬ê¸°
+    if ë‚¨ì€_ì‹œê°„ > 0:
+        for ì´ì•Œ in ì´ì•Œ_ë¦¬ìŠ¤íŠ¸:
+            pygame.draw.rect(í™”ë©´, ë¹¨ê°„ìƒ‰, (ì´ì•Œ[0], ì´ì•Œ[1], ì´ì•Œ_ê°€ë¡œ, ì´ì•Œ_ì„¸ë¡œ))
 
-    # ¾ÆÀÌÅÛ »ý¼º ¹× ¾÷µ¥ÀÌÆ®
-    if ³²Àº_½Ã°£ > 0:
-        if ÇöÀç_½Ã°£ - ¾ÆÀÌÅÛ_»ý¼º_½Ã°£ >= ¾ÆÀÌÅÛ_»ý¼º_°£°Ý:
-            ¾ÆÀÌÅÛ_»ý¼º_½Ã°£ = ÇöÀç_½Ã°£
-            ¾ÆÀÌÅÛ_¸®½ºÆ®.append(¾ÆÀÌÅÛ_»ý¼º())
-            ¾ÆÀÌÅÛ_»ý¼º_°£°Ý = random.uniform(5, 15) * 1000  # ¾ÆÀÌÅÛ »ý¼º °£°ÝÀ» 5ÃÊ¿¡¼­ 15ÃÊ »çÀÌ·Î ·£´ý ¼³Á¤
+    # ì•„ì´í…œ ìƒì„± ë° ì—…ë°ì´íŠ¸
+    if ë‚¨ì€_ì‹œê°„ > 0:
+        if í˜„ìž¬_ì‹œê°„ - ì•„ì´í…œ_ìƒì„±_ì‹œê°„ >= ì•„ì´í…œ_ìƒì„±_ê°„ê²©:
+            ì•„ì´í…œ_ìƒì„±_ì‹œê°„ = í˜„ìž¬_ì‹œê°„
+            ì•„ì´í…œ_ë¦¬ìŠ¤íŠ¸.append(ì•„ì´í…œ_ìƒì„±())
+            ì•„ì´í…œ_ìƒì„±_ê°„ê²© = random.uniform(5, 15) * 1000  # ì•„ì´í…œ ìƒì„± ê°„ê²©ì„ 5ì´ˆì—ì„œ 15ì´ˆ ì‚¬ì´ë¡œ ëžœë¤ ì„¤ì •
 
-    # ¾ÆÀÌÅÛ ±×¸®±â
-    for ¾ÆÀÌÅÛ in ¾ÆÀÌÅÛ_¸®½ºÆ®:
-        È­¸é.blit(¾ÆÀÌÅÛ_¸ð½À, (¾ÆÀÌÅÛ['À§Ä¡'][0], ¾ÆÀÌÅÛ['À§Ä¡'][1]))
+    # ì•„ì´í…œ ê·¸ë¦¬ê¸°
+    for ì•„ì´í…œ in ì•„ì´í…œ_ë¦¬ìŠ¤íŠ¸:
+        í™”ë©´.blit(ì•„ì´í…œ_ëª¨ìŠµ, (ì•„ì´í…œ['ìœ„ì¹˜'][0], ì•„ì´í…œ['ìœ„ì¹˜'][1]))
 
-    # ¾ÆÀÌÅÛ À§Ä¡ ¾÷µ¥ÀÌÆ®
-    ¾ÆÀÌÅÛ['À§Ä¡'][1] += ¾ÆÀÌÅÛ_¼Óµµ
+    # ì•„ì´í…œ ìœ„ì¹˜ ì—…ë°ì´íŠ¸
+    ì•„ì´í…œ['ìœ„ì¹˜'][1] += ì•„ì´í…œ_ì†ë„
 
-    # ¾ÆÀÌÅÛ Ãæµ¹ °¨Áö
-    ¾ÆÀÌÅÛ_Ãæµ¹_°¨Áö()
+    # ì•„ì´í…œ ì¶©ëŒ ê°ì§€
+    ì•„ì´í…œ_ì¶©ëŒ_ê°ì§€()
 
-    for Àå¾Ö¹°_À§Ä¡ in Àå¾Ö¹°_¸®½ºÆ®:
-        Àå¾Ö¹°_À§Ä¡[1] += Àå¾Ö¹°_¼Óµµ
+    for ìž¥ì• ë¬¼_ìœ„ì¹˜ in ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸:
+        ìž¥ì• ë¬¼_ìœ„ì¹˜[1] += ìž¥ì• ë¬¼_ì†ë„
 
-        # Ãæµ¹ °¨Áö
-        if Ãæµ¹_°¨Áö(Ä³¸¯ÅÍ_À§Ä¡, Ä³¸¯ÅÍ_°¡·Î, Ä³¸¯ÅÍ_¼¼·Î, Àå¾Ö¹°_À§Ä¡, Àå¾Ö¹°_°¡·Î, Àå¾Ö¹°_¼¼·Î):
-            if ¹«Àû == True:
-                ¹«ÀûÃæµ¹À½.play()
-                Á¡¼ö += 50  # ¹«Àû »óÅÂÀÌ¸é Ãæµ¹ÀÌ ÀÏ¾î³ªÁö ¾ÊÀ½
+        # ì¶©ëŒ ê°ì§€
+        if ì¶©ëŒ_ê°ì§€(ìºë¦­í„°_ìœ„ì¹˜, ìºë¦­í„°_ê°€ë¡œ, ìºë¦­í„°_ì„¸ë¡œ, ìž¥ì• ë¬¼_ìœ„ì¹˜, ìž¥ì• ë¬¼_ê°€ë¡œ, ìž¥ì• ë¬¼_ì„¸ë¡œ):
+            if ë¬´ì  == True:
+                ë¬´ì ì¶©ëŒìŒ.play()
+                ì ìˆ˜ += 50  # ë¬´ì  ìƒíƒœì´ë©´ ì¶©ëŒì´ ì¼ì–´ë‚˜ì§€ ì•ŠìŒ
             else:
-                Ãæµ¹À½.play()
-                ¸ñ¼û -= 1
-                Ä³¸¯ÅÍ_¼Óµµ = 1
-            Àå¾Ö¹°_¸®½ºÆ®.remove(Àå¾Ö¹°_À§Ä¡)
+                ì¶©ëŒìŒ.play()
+                ëª©ìˆ¨ -= 1
+                ìºë¦­í„°_ì†ë„ = 1
+            ìž¥ì• ë¬¼_ë¦¬ìŠ¤íŠ¸.remove(ìž¥ì• ë¬¼_ìœ„ì¹˜)
             
-        # Àå¾Ö¹° È­¸é¿¡ ±×¸®±â
-        È­¸é.blit(¿î¼®, (Àå¾Ö¹°_À§Ä¡[0], Àå¾Ö¹°_À§Ä¡[1], Àå¾Ö¹°_°¡·Î, Àå¾Ö¹°_¼¼·Î))
+        # ìž¥ì• ë¬¼ í™”ë©´ì— ê·¸ë¦¬ê¸°
+        í™”ë©´.blit(ìš´ì„, (ìž¥ì• ë¬¼_ìœ„ì¹˜[0], ìž¥ì• ë¬¼_ìœ„ì¹˜[1], ìž¥ì• ë¬¼_ê°€ë¡œ, ìž¥ì• ë¬¼_ì„¸ë¡œ))
 
-    # °ÔÀÓ ÇÃ·¹ÀÌ Á¾·á Á¶°Ç
-    if ¸ñ¼û <= 0: # °ÔÀÓ ¿À¹ö Á¶°Ç È®ÀÎ
-        ¹«Àû»óÅÂÀ½.stop()
-        ¹è°æÀ½.stop()
-        °ÔÀÓ_¿À¹ö = True
-        °ÔÀÓ_¿À¹ö_È­¸é() # °ÔÀÓ ¿À¹ö »óÅÂ¿¡¼­ °ÔÀÓ ¿À¹ö È­¸é Ç¥½Ã
-        continue  # °ÔÀÓ ¿À¹ö È­¸éÀÌ Ç¥½ÃµÇ´Â µ¿¾È °ÔÀÓ ·çÇÁ ¸ØÃã
-    else: # °ÔÀÓ Å¬¸®¾î Á¶°Ç È®ÀÎ
-        if ³²Àº_½Ã°£ <= 0:  # °ÔÀÓ ¿À¹ö »óÅÂ°¡ ¾Æ´Ï°í 1ºÐ(60ÃÊ)ÀÌ °æ°úÇÑ °æ¿ì
-            ¹«Àû»óÅÂÀ½.stop()
-            ¹è°æÀ½.stop()
-            °ÔÀÓ_Å¬¸®¾î = True
-            °ÔÀÓ_Å¬¸®¾î_È­¸é()    # °ÔÀÓ Å¬¸®¾î »óÅÂ¿¡¼­ °ÔÀÓ Å¬¸®¾î È­¸é Ç¥½Ã
+    # ê²Œìž„ í”Œë ˆì´ ì¢…ë£Œ ì¡°ê±´
+    if ëª©ìˆ¨ <= 0: # ê²Œìž„ ì˜¤ë²„ ì¡°ê±´ í™•ì¸
+        ë¬´ì ìƒíƒœìŒ.stop()
+        ë°°ê²½ìŒ.stop()
+        ê²Œìž„_ì˜¤ë²„ = True
+        ê²Œìž„_ì˜¤ë²„_í™”ë©´() # ê²Œìž„ ì˜¤ë²„ ìƒíƒœì—ì„œ ê²Œìž„ ì˜¤ë²„ í™”ë©´ í‘œì‹œ
+        continue  # ê²Œìž„ ì˜¤ë²„ í™”ë©´ì´ í‘œì‹œë˜ëŠ” ë™ì•ˆ ê²Œìž„ ë£¨í”„ ë©ˆì¶¤
+    else: # ê²Œìž„ í´ë¦¬ì–´ ì¡°ê±´ í™•ì¸
+        if ë‚¨ì€_ì‹œê°„ <= 0:  # ê²Œìž„ ì˜¤ë²„ ìƒíƒœê°€ ì•„ë‹ˆê³  1ë¶„(60ì´ˆ)ì´ ê²½ê³¼í•œ ê²½ìš°
+            ë¬´ì ìƒíƒœìŒ.stop()
+            ë°°ê²½ìŒ.stop()
+            ê²Œìž„_í´ë¦¬ì–´ = True
+            ê²Œìž„_í´ë¦¬ì–´_í™”ë©´()    # ê²Œìž„ í´ë¦¬ì–´ ìƒíƒœì—ì„œ ê²Œìž„ í´ë¦¬ì–´ í™”ë©´ í‘œì‹œ
             continue
 
-    # °ÔÀÓ ·çÇÁ ³»¿¡¼­ ¹«Àû »óÅÂ Ã¼Å©
-    if ¹«Àû:
-        if not ¹«Àû_È°¼ºÈ­:  # ¹«ÀûÀÌ È°¼ºÈ­µÈ ½ÃÁ¡¿¡¼­¸¸ ¹«Àû ½ÃÀÛ ½Ã°£À» ÃÊ±âÈ­
-            ¹«Àû_½ÃÀÛ_½Ã°£ = pygame.time.get_ticks()  # ÇöÀç ½Ã°£ ÀúÀå
-            ¹«Àû_È°¼ºÈ­ = True  # ¹«ÀûÀÌ È°¼ºÈ­µÈ »óÅÂ·Î ÇÃ·¡±× ¼³Á¤
-        Áö±Ý_½Ã°£ = pygame.time.get_ticks()  # ÇöÀç ½Ã°£ ÀúÀå
-        ¹«Àû_³²Àº½Ã°£ = (Áö±Ý_½Ã°£ - ¹«Àû_½ÃÀÛ_½Ã°£) / 1000
-        ¹«Àû_ÅØ½ºÆ® = ÆùÆ®.render(f'MUTEKI: {int(6-¹«Àû_³²Àº½Ã°£)}', True, »¡°£»ö)
-        È­¸é.blit(¹«Àû_ÅØ½ºÆ®, (10, 100))
-        if ¹«Àû_³²Àº½Ã°£ >= 5:
-            ¹«Àû»óÅÂÀ½.stop()
-            ¹è°æÀ½.play(-1)
-            ¹«Àû = False  # ¹«Àû »óÅÂÀÇ Áö¼Ó ½Ã°£ÀÌ Áö³ª¸é ¹«Àû »óÅÂ Á¾·á
+    # ê²Œìž„ ë£¨í”„ ë‚´ì—ì„œ ë¬´ì  ìƒíƒœ ì²´í¬
+    if ë¬´ì :
+        if not ë¬´ì _í™œì„±í™”:  # ë¬´ì ì´ í™œì„±í™”ëœ ì‹œì ì—ì„œë§Œ ë¬´ì  ì‹œìž‘ ì‹œê°„ì„ ì´ˆê¸°í™”
+            ë¬´ì _ì‹œìž‘_ì‹œê°„ = pygame.time.get_ticks()  # í˜„ìž¬ ì‹œê°„ ì €ìž¥
+            ë¬´ì _í™œì„±í™” = True  # ë¬´ì ì´ í™œì„±í™”ëœ ìƒíƒœë¡œ í”Œëž˜ê·¸ ì„¤ì •
+        ì§€ê¸ˆ_ì‹œê°„ = pygame.time.get_ticks()  # í˜„ìž¬ ì‹œê°„ ì €ìž¥
+        ë¬´ì _ë‚¨ì€ì‹œê°„ = (ì§€ê¸ˆ_ì‹œê°„ - ë¬´ì _ì‹œìž‘_ì‹œê°„) / 1000
+        if ë¬´ì _ë‚¨ì€ì‹œê°„ >= 5:
+            ë¬´ì ìƒíƒœìŒ.stop()
+            ë°°ê²½ìŒ.play(-1)
+            ë¬´ì  = False  # ë¬´ì  ìƒíƒœì˜ ì§€ì† ì‹œê°„ì´ ì§€ë‚˜ë©´ ë¬´ì  ìƒíƒœ ì¢…ë£Œ
     else:
-        ¹«Àû_È°¼ºÈ­ = False  # ¹«Àû »óÅÂ°¡ ºñÈ°¼ºÈ­µÈ °æ¿ì¿¡´Â ¹«Àû È°¼ºÈ­ ÇÃ·¡±×¸¦ False·Î ¼³Á¤
+        ë¬´ì _í™œì„±í™” = False  # ë¬´ì  ìƒíƒœê°€ ë¹„í™œì„±í™”ëœ ê²½ìš°ì—ëŠ” ë¬´ì  í™œì„±í™” í”Œëž˜ê·¸ë¥¼ Falseë¡œ ì„¤ì •
 
-    # Ä³¸¯ÅÍ È­¸é¿¡ ±×¸®±â
-    if ³²Àº_½Ã°£ > 0:
-        if ¹«Àû:
-            pygame.draw.rect(È­¸é, ÃÊ·Ï»ö, (Ä³¸¯ÅÍ_À§Ä¡[0], Ä³¸¯ÅÍ_À§Ä¡[1], Ä³¸¯ÅÍ_°¡·Î, Ä³¸¯ÅÍ_¼¼·Î))
+    # ìºë¦­í„° í™”ë©´ì— ê·¸ë¦¬ê¸°
+    if ë‚¨ì€_ì‹œê°„ > 0:
+        if ë¬´ì :
+            pygame.draw.rect(í™”ë©´, ì´ˆë¡ìƒ‰, (ìºë¦­í„°_ìœ„ì¹˜[0], ìºë¦­í„°_ìœ„ì¹˜[1], ìºë¦­í„°_ê°€ë¡œ, ìºë¦­í„°_ì„¸ë¡œ))
         else:
-            È­¸é.blit(¿ìÁÖ¼±, (Ä³¸¯ÅÍ_À§Ä¡[0], Ä³¸¯ÅÍ_À§Ä¡[1], Ä³¸¯ÅÍ_°¡·Î, Ä³¸¯ÅÍ_¼¼·Î))
+            í™”ë©´.blit(ìš°ì£¼ì„ , (ìºë¦­í„°_ìœ„ì¹˜[0], ìºë¦­í„°_ìœ„ì¹˜[1], ìºë¦­í„°_ê°€ë¡œ, ìºë¦­í„°_ì„¸ë¡œ))
 
-    # È­¸é¿¡ ³²Àº ½Ã°£ Ç¥½Ã
-    ÆùÆ® = pygame.font.SysFont(None, 24)
-    ³²Àº_½Ã°£_ÅØ½ºÆ® = ÆùÆ®.render(f'TIME: {int(³²Àº_½Ã°£)}S', True, Èò»ö)
-    È­¸é.blit(³²Àº_½Ã°£_ÅØ½ºÆ®, (10, 40))
+    # í™”ë©´ì— ë‚¨ì€ ì‹œê°„ í‘œì‹œ
+    í°íŠ¸ = pygame.font.SysFont(None, 24)
+    ë‚¨ì€_ì‹œê°„_í…ìŠ¤íŠ¸ = í°íŠ¸.render(f'TIME: {int(ë‚¨ì€_ì‹œê°„)}S', True, í°ìƒ‰)
+    í™”ë©´.blit(ë‚¨ì€_ì‹œê°„_í…ìŠ¤íŠ¸, (10, 40))
     
-    # È­¸é¿¡ ÇöÀç ¸ñ¼û ¼ö Ç¥½Ã
-    ¸ñ¼û_ÅØ½ºÆ® = ÆùÆ®.render(f'LIFE: {¸ñ¼û}', True, Èò»ö)
-    È­¸é.blit(¸ñ¼û_ÅØ½ºÆ®, (10, 10))
+    # í™”ë©´ì— í˜„ìž¬ ëª©ìˆ¨ ìˆ˜ í‘œì‹œ
+    ëª©ìˆ¨_í…ìŠ¤íŠ¸ = í°íŠ¸.render(f'LIFE: {ëª©ìˆ¨}', True, í°ìƒ‰)
+    í™”ë©´.blit(ëª©ìˆ¨_í…ìŠ¤íŠ¸, (10, 10))
 
-    # È­¸é¿¡ Á¡¼ö Ç¥½Ã
-    Á¡¼ö_ÅØ½ºÆ® = ÆùÆ®.render(f'SCORE: {Á¡¼ö}', True, Èò»ö)
-    È­¸é.blit(Á¡¼ö_ÅØ½ºÆ®, (10, 70))
+    # í™”ë©´ì— ì ìˆ˜ í‘œì‹œ
+    ì ìˆ˜_í…ìŠ¤íŠ¸ = í°íŠ¸.render(f'SCORE: {ì ìˆ˜}', True, í°ìƒ‰)
+    í™”ë©´.blit(ì ìˆ˜_í…ìŠ¤íŠ¸, (10, 70))
 
-    # È­¸é ¾÷µ¥ÀÌÆ®
+    # í™”ë©´ ì—…ë°ì´íŠ¸
     pygame.display.update()
